@@ -127,3 +127,17 @@ int existe(int x, lista *L)
 	if(x == aux->dato){ return 1; }
 	return 0;
 }
+
+int lleno(lista *L)
+{
+	if(largo_lista(L) == 0){return 1;}
+
+	lista *aux = L->sgte;
+	while(aux->final != 1){
+		if(aux->dato == -10000){ return 0; }
+		aux = aux->sgte;
+	}
+	if(aux->dato == -10000){ return 0;}
+
+	return 1;
+}

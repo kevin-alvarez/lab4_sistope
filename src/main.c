@@ -51,8 +51,8 @@ int main(int argc, char** argv)
 	}
 
 	int tasa_miss_optimo;
-	//tasa_miss_optimo = optimo(L, archivo_entrada,archivo_salida,);
-
+	tasa_miss_optimo = optimo(L, archivo_entrada,archivo_salida);
+	//printf("%d\n", tasa_miss_optimo);
 
 	return 0;
 }

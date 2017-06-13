@@ -76,14 +76,59 @@ int optimo(lista *L, char *archivo_entrada, char *archivo_salida)
 {
 
 	/* abro el archivo de entrada */
-	FILE *fp;
-	fp = fopen ( archivo_entrada, "r" );        
-	if (fp==NULL) 
+	FILE *entrada;
+	entrada = fopen ( archivo_entrada, "r" );        
+	if (entrada==NULL) 
 	{
 		printf("Archivo de entrada no existe\n"); 
 		exit (1);
 	}
 	
+	/* 
+	cuento las comas del archivo de entrada, ya que la cantidad 
+	de elementos son la cantidad de comas + 1
+	*/
+	int cantidad_entrada = 0;
+	char c;
+	while (feof(entrada) == 0)
+ 	{
+ 		c = fgetc(entrada);
+ 		if(c == ',') {cantidad_entrada++;}
+ 	}
+ 	cantidad_entrada++;
+ 	rewind(entrada);
 
-	return 0;
+ 	/*
+	ahora si obtengo los datos del archivo de entrada
+	y los guardo en un arreglo correspondiente.
+ 	*/
+ 	int datos[cantidad_entrada];
+ 	int i,j = 0;
+ 	char entero[10000];
+ 	while (feof(entrada) == 0)
+ 	{
+ 		c = fgetc(entrada);
+ 		if (c != ',')
+ 		{
+ 			entero[i] = c;
+ 			i++;
+ 		}
+ 		else
+ 		{	
+ 			entero[i] = '\0';
+ 			i = 0;
+ 			datos[j] = atoi(entero);
+ 			j++;
+ 		}
+ 	}
+ 	entero[i] = '\0';
+	datos[j] = atoi(entero);
+
+	/*
+ 	for(i = 0; i < cantidad_entrada; i++){
+ 		printf("%d\n", datos[i]);
+ 	}
+	*/
+
+	return cantidad_entrada;
 }

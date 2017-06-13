@@ -66,4 +66,11 @@ verifica si existe un elemento x en la lista L.
 */
 int existe(int x, lista *L);
 
+/*
+verifica si la lista L esta llena o no
+@entrada: la lista L a verificar
+@salida: 1 si esta llena y 0 en caso contrario
+*/
+int lleno(lista *L);
+
 #endif
