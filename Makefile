@@ -2,15 +2,15 @@ CC=gcc
 route=src/
 libs=
 
-all: main.o functions.o
-	$(CC) main.o functions.o listas.o -o lab3 -Wall $(libs)
-	rm main.o functions.o listas.o
+all: main.o funciones.o listas.o
+	$(CC) main.o funciones.o listas.o -o politica -Wall $(libs)
+	rm main.o funciones.o listas.o
 
 main.o: $(route)main.c
 	$(CC) -c $(route)main.c
 
-functions.o: $(route)functions.c
-	$(CC) -c $(route)functions.c
+funciones.o: $(route)funciones.c
+	$(CC) -c $(route)funciones.c
 
 listas.o: $(route)listas.c
 		$(CC) -c $(route)listas.c

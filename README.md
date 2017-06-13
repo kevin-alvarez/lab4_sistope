@@ -1,4 +1,2 @@
-# Laboratorio 4 - Sistemas Operativos
-
-## Contenido
-<Contenido>
+# sistope-lab4
+Laboratorio de politicas de reemplazo de páginas
