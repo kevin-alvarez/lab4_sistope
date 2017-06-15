@@ -44,16 +44,27 @@ int main(int argc, char** argv)
 	/*
 	creo la lista vacia con el numero de marcos disponibles
 	*/
-	lista *L = crear();
+	lista *LO = crear();
+	lista *LF = crear();
+	lista *LL = crear();
+	lista *LR = crear();
 	int i;
-	for(i < 0; i < m; i++){
-		L = insertar_nodo(L);	
+	for(i = 0; i < m; i++){
+		LO = insertar_nodo(LO);
+		LF = insertar_nodo(LF);
+		LL = insertar_nodo(LL);
+		LR = insertar_nodo(LR);	
 	}
 
 	float tasa_miss_optimo;
-	tasa_miss_optimo = optimo(L, archivo_entrada,archivo_salida);
-	//printf("%d\n", tasa_miss_optimo);
+	tasa_miss_optimo = optimo(LO, archivo_entrada,archivo_salida);
+
+	fifo(LF,archivo_entrada,archivo_salida, tasa_miss_optimo);
 	
+	destruir(LO);
+	destruir(LF);
+	destruir(LL);
+	destruir(LR);
 	return 0;
 }
 

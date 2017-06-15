@@ -59,4 +59,9 @@ funcion que entrega la posicion del numero mayor de un arreglo de numeros
 */
 int mayor(int arreglo[], int largo);
 
+/*
+
+*/
+void fifo(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_optimo);
+
 #endif

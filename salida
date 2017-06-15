@@ -14,7 +14,29 @@ Algoritmo OPTIMO
 
 4 - 5 - 1
 
-71.43%
+tasa miss: 71.43%
 
-28.57%
+tasa hits: 28.57%
+
+Algoritmo FIFO
+
+2 -   -  
+
+2 - 3 -  
+
+2 - 3 -  
+
+2 - 3 - 1
+
+5 - 3 - 1
+
+5 - 2 - 1
+
+5 - 2 - 4
+
+tasa miss: 85.71%
+
+tasa hits: 14.29%
+
+14.29% peor que el algoritmo óptimo
 

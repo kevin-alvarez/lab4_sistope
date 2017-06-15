@@ -104,7 +104,9 @@ float optimo(lista *L, char *archivo_entrada, char *archivo_salida)
 	y los guardo en un arreglo correspondiente.
  	*/
  	int datos[cantidad_entrada];
- 	int i,j = 0;
+ 	int i,j;
+ 	i = 0;
+ 	j = 0;
  	char entero[10000];
  	while (feof(entrada) == 0)
  	{
@@ -150,11 +152,9 @@ float optimo(lista *L, char *archivo_entrada, char *archivo_salida)
 	int k;
 
 	int futuro[cantidad_marcos];
-	int antiguedad[cantidad_marcos];
 	for(i = 0; i < cantidad_marcos; i++)
 	{
 		futuro[i] = 0;
-		antiguedad[i] = 0;
 	}
 
 	for(i = 0; i < cantidad_entrada; i++)
@@ -183,18 +183,7 @@ float optimo(lista *L, char *archivo_entrada, char *archivo_salida)
 				}
 			}
 			fputc('\n', salida);
-			fputc('\n', salida);
-
-			//aumento la antiguedad de una pagina en caso de que exista
-			for(j = 0; j < cantidad_marcos; j++)
-			{
-				if(recuperar_dato(0,aux) != -10000)
-				{
-					antiguedad[j]++;
-				}
-			}
-
-			antiguedad[posicion(dato_actual,aux)] = 0;
+			fputc('\n', salida);;
 
 		}
 		else{
@@ -233,7 +222,7 @@ float optimo(lista *L, char *archivo_entrada, char *archivo_salida)
 					futuro[j] = mirar_futuro(i, cantidad_entrada, datos, recuperar_dato(j,aux));
 				}
 				big = mayor(futuro, cantidad_marcos);
-				insertar_dato(dato_actual, big, aux);
+				aux = insertar_dato(dato_actual, big, aux);
 
 				 for(k = 0; k < cantidad_marcos; k++)
 				{
@@ -256,25 +245,16 @@ float optimo(lista *L, char *archivo_entrada, char *archivo_salida)
 				fputc('\n', salida);
 
 			}
-
-			//aumento la antiguedad de una pagina en caso de que exista
-			for(j = 0; j < cantidad_marcos; j++)
-			{
-				if(recuperar_dato(0,aux) != -10000)
-				{
-					antiguedad[j]++;
-				}
-			}
 		}
 	}
 
 	float tasa_miss = ((float)miss/(float)(miss + hits)) * 100;
 	float tasa_hits = ((float)hits/(float)(miss + hits)) * 100;
 
-	sprintf(cadena, "%5.2f%c\n\n", tasa_miss,37);
+	sprintf(cadena, "tasa miss: %5.2f%c\n\n", tasa_miss,37);
 	fputs(cadena,salida);
 
-	sprintf(cadena, "%5.2f%c\n", tasa_hits,37);
+	sprintf(cadena, "tasa hits: %5.2f%c\n\n", tasa_hits,37);
 	fputs(cadena,salida);
 
 	fclose(entrada);
@@ -319,4 +299,179 @@ int mayor(int arreglo[], int largo)
 	}
 
 	return 0;
+}
+
+void fifo(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_optimo)
+{
+	lista *aux = L;
+
+	/* abro el archivo de entrada */
+	FILE *entrada;
+	entrada = fopen ( archivo_entrada, "r" );        
+	if (entrada==NULL) 
+	{
+		printf("Archivo de entrada no existe\n"); 
+		exit (1);
+	}
+	
+	/* 
+	cuento las comas del archivo de entrada, ya que la cantidad 
+	de elementos son la cantidad de comas + 1
+	*/
+	int cantidad_entrada = 0;
+	char c;
+	while (feof(entrada) == 0)
+ 	{
+ 		c = fgetc(entrada);
+ 		if(c == ',') {cantidad_entrada++;}
+ 	}
+ 	cantidad_entrada++;
+ 	rewind(entrada);
+
+ 	/*
+	ahora si obtengo los datos del archivo de entrada
+	y los guardo en un arreglo correspondiente.
+ 	*/
+ 	int datos[cantidad_entrada];
+ 	int i,j;
+ 	i = 0;
+ 	j = 0;
+ 	char entero[10000];
+ 	while (feof(entrada) == 0)
+ 	{
+ 		c = fgetc(entrada);
+ 		if (c != ',')
+ 		{
+ 			entero[i] = c;
+ 			i++;
+ 		}
+ 		else
+ 		{	
+ 			entero[i] = '\0';
+ 			i = 0;
+ 			datos[j] = atoi(entero);
+ 			j++;
+ 		}
+ 	}
+ 	entero[i] = '\0';
+	datos[j] = atoi(entero);
+
+	/* 
+	ahora tengo todos los datos del archivo de entrada guardados correctamente.
+	Abro el archivo de salida para comenzar a escribir los resultados
+	*/
+	FILE *salida;
+	salida = fopen ( archivo_salida, "a" ); /* Ahora lo abro en modo append para no sobreescribir */
+	fputs("Algoritmo FIFO\n\n", salida);
+
+	/* creo variables a utilizar */
+	int miss = 0;
+	int hits = 0;
+	int m = 0;
+	int k;
+	char cadena[1000];
+	int dato_actual;
+	int cantidad_marcos = largo_lista(aux);
+	for(i = 0; i < cantidad_entrada; i++)
+	{
+		dato_actual = datos[i];
+
+		if(existe(dato_actual, aux) == 1)
+		{
+			hits++;
+
+			for(k = 0; k < cantidad_marcos; k++)
+			{
+				if(recuperar_dato(k,aux) != -10000)
+				{
+					fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+				}
+				else
+				{
+					fputc(' ', salida);
+				}
+				if(k != (cantidad_marcos-1))
+				{
+					fputc(' ', salida);
+					fputc('-', salida);
+					fputc(' ', salida);
+				}
+			}
+			fputc('\n', salida);
+			fputc('\n', salida);;
+		}
+		else
+		{
+			miss++;
+
+			if(lleno(aux) != 1)
+			{
+				aux = insertar_dato(dato_actual, m, aux);
+				m = (m+1)%cantidad_marcos;
+
+				for(k = 0; k < cantidad_marcos; k++)
+				{
+					if(recuperar_dato(k,aux) != -10000)
+					{
+						fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+					}
+					else
+					{
+						fputc(' ', salida);
+					}
+					if(k != (cantidad_marcos-1))
+					{
+						fputc(' ', salida);
+						fputc('-', salida);
+						fputc(' ', salida);
+					}
+				}
+				fputc('\n', salida);
+				fputc('\n', salida);
+			}
+			else
+			{
+				/* si los marcos estan llenos entonces comienza el reemplazo */
+				aux = insertar_dato(dato_actual, m, aux);
+				m = (m+1)%cantidad_marcos;
+
+				for(k = 0; k < cantidad_marcos; k++)
+				{
+					if(recuperar_dato(k,aux) != -10000)
+					{
+						fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+					}
+					else
+					{
+						fputc(' ', salida);
+					}
+					if(k != (cantidad_marcos-1))
+					{
+						fputc(' ', salida);
+						fputc('-', salida);
+						fputc(' ', salida);
+					}
+				}
+				fputc('\n', salida);
+				fputc('\n', salida);
+			}
+		}
+	}
+
+	float tasa_miss = ((float)miss/(float)(miss + hits)) * 100;
+	float tasa_hits = ((float)hits/(float)(miss + hits)) * 100;
+
+	sprintf(cadena, "tasa miss: %5.2f%c\n\n", tasa_miss,37);
+	fputs(cadena,salida);
+
+	sprintf(cadena, "tasa hits: %5.2f%c\n\n", tasa_hits,37);
+	fputs(cadena,salida);
+
+	float diferencia = tasa_miss - tasa_miss_optimo;
+	sprintf(cadena, "%5.2f%c peor que el algoritmo óptimo\n\n",diferencia, 37);
+	fputs(cadena,salida);
+
+	fclose(entrada);
+	fclose(salida);
+
 }
