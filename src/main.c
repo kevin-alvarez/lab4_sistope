@@ -27,8 +27,8 @@ int main(int argc, char** argv)
 	*/
 
 	/*
-	PROBANDO EL TDA
-
+	PROBANDO EL TDA 
+	
 	lista *L = crear();
 	int i;
 	for(i < 0; i < 3; i++){
@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 	insertar_dato(2,1,L);
 	insertar_dato(3,2,L);
 	mostrar(L);
-	printf("%d\n", recuperar_dato(0,L));
+	printf("%d\n", existe(0,L));
 	*/
 
 	/*
@@ -50,10 +50,10 @@ int main(int argc, char** argv)
 		L = insertar_nodo(L);	
 	}
 
-	int tasa_miss_optimo;
+	float tasa_miss_optimo;
 	tasa_miss_optimo = optimo(L, archivo_entrada,archivo_salida);
 	//printf("%d\n", tasa_miss_optimo);
-
+	
 	return 0;
 }
 

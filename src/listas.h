@@ -73,4 +73,12 @@ verifica si la lista L esta llena o no
 */
 int lleno(lista *L);
 
+/*
+entrega la posicion en que se encuentra el dato x en la lista L
+@entrada: el dato a buscar, y la lista L en la cual buscar
+@salida: la posicion del dato en la lista L
+	  Si no esta el dato en la lista, entrega -10000
+*/
+int posicion(int x, lista *L);
+
 #endif

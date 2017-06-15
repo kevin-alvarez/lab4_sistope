@@ -141,3 +141,20 @@ int lleno(lista *L)
 
 	return 1;
 }
+
+int posicion(int x, lista *L)
+{
+	lista *aux = L;
+	int contador = -1;
+	if(aux->final != 1)
+	{
+		if(aux->dato == x)
+			return contador;
+		else
+		{
+			aux = aux->sgte;
+			contador++;
+		}
+	}
+	return -10000;
+}
