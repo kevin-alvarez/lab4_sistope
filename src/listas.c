@@ -12,7 +12,7 @@ lista *crear()
 }
 
 lista *insertar_nodo(lista *L)
-{	
+{
 	lista *aux=L;
 	lista *cabecera = L;
 
@@ -31,8 +31,8 @@ lista *insertar_nodo(lista *L)
 }
 
 int largo_lista(lista *L)
-{	
-	/* 
+{
+	/*
 	la cabecera no cuenta para el largo de una lista.
 	*/
 	lista *aux = L;
@@ -55,7 +55,7 @@ lista *insertar_dato(int x, int p, lista *L){
 	int i;
 
 	if(p >= largo)
-	{	
+	{
 		/*  Si la posicion a insertar el dato supera el largo de la lista */
 		printf("No se ha insertado el dato\n");
 		return L;
@@ -89,7 +89,7 @@ int recuperar_dato(int p, lista *L)
 	int i;
 
 	if(p >= largo)
-	{	
+	{
 		/*  Si la posicion a recuperar el dato supera el largo de la lista */
 		printf("posicion invalida\n");
 		return -10000;

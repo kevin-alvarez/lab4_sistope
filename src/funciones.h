@@ -60,6 +60,11 @@ funcion que entrega la posicion del numero mayor de un arreglo de numeros
 int mayor(int arreglo[], int largo);
 
 /*
+*/
+int getNumPaginas(char* nombreEntrada);
+
+int* getPaginas(char* entrada, int numPaginas);
+/*
 
 */
 void fifo(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_optimo);
