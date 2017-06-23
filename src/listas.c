@@ -146,15 +146,19 @@ int posicion(int x, lista *L)
 {
 	lista *aux = L;
 	int contador = -1;
-	if(aux->final != 1)
+	while(aux->final != 1)
 	{
-		if(aux->dato == x)
+		if(aux->dato == x){
 			return contador;
+		}
 		else
 		{
 			aux = aux->sgte;
 			contador++;
 		}
+	}
+	if(aux->dato == x){
+		return contador;
 	}
 	return -10000;
 }

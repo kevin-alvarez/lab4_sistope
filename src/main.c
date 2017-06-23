@@ -27,12 +27,12 @@ int main(int argc, char** argv)
 	*/
 
 	/*
-	PROBANDO EL TDA 
-	
+	PROBANDO EL TDA
+
 	lista *L = crear();
 	int i;
 	for(i < 0; i < 3; i++){
-		L = insertar_nodo(L);	
+		L = insertar_nodo(L);
 	}
 	insertar_dato(69,0,L);
 	insertar_dato(2,1,L);
@@ -53,18 +53,18 @@ int main(int argc, char** argv)
 		LO = insertar_nodo(LO);
 		LF = insertar_nodo(LF);
 		LL = insertar_nodo(LL);
-		LR = insertar_nodo(LR);	
+		LR = insertar_nodo(LR);
 	}
 
 	float tasa_miss_optimo;
 	tasa_miss_optimo = optimo(LO, archivo_entrada,archivo_salida);
 
 	fifo(LF,archivo_entrada,archivo_salida, tasa_miss_optimo);
-	
+	LRU(LL,archivo_entrada,archivo_salida, tasa_miss_optimo);
+
 	destruir(LO);
 	destruir(LF);
 	destruir(LL);
 	destruir(LR);
 	return 0;
 }
-

@@ -143,11 +143,6 @@ float optimo(lista *L, char *archivo_entrada, char *archivo_salida)
 	numPaginas = getNumPaginas(archivo_entrada);
 	paginas = getPaginas(archivo_entrada, numPaginas);
 
-
- 	for(i = 0; i < numPaginas; i++){
- 		printf("%d\n", paginas[i]);
- 	}
-
 	/*
 	ahora tengo todos los datos del archivo de entrada guardados correctamente.
 	Abro el archivo de salida para comenzar a escribir los resultados
@@ -323,11 +318,6 @@ void fifo(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss
 	numPaginas = getNumPaginas(archivo_entrada);
 	paginas = getPaginas(archivo_entrada, numPaginas);
 
-
- 	for(i = 0; i < numPaginas; i++){
- 		printf("%d\n", paginas[i]);
- 	}
-
 	/*
 	ahora tengo todos los datos del archivo de entrada guardados correctamente.
 	Abro el archivo de salida para comenzar a escribir los resultados
@@ -457,11 +447,7 @@ void LRU(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_
 	//Se obtienen las paginas
 	numPaginas = getNumPaginas(archivo_entrada);
 	paginas = getPaginas(archivo_entrada, numPaginas);
-	usados = (int*)malloc(numPaginas*sizeof(int));
-
- 	for(i = 0; i < numPaginas; i++){
- 		printf("%d\n", paginas[i]);
- 	}
+	usados = (int*)malloc(numPaginas*sizeof(int)); 	
 
 	/*
 	ahora tengo todos los datos del archivo de entrada guardados correctamente.
