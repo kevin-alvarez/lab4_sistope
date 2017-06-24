@@ -8,6 +8,9 @@
 #include <time.h>
 
 //////// --ESTRUCTURAS-- ///////
+/*
+    Estructura principal de la lista enlazada circular.
+*/
 struct celda{
     int dato;   /* valor del número de página */
     int final;  /* valor 1 para indicar que el nodo es el final de la lista,*/
@@ -17,67 +20,74 @@ typedef struct celda lista;
 
 //////// --FUNCIONES-- ///////
 /*
-crea una lista vacia
-@salida: una lista vacia
+    Funcion que crea una lista vacia.
+    @return Lista vacia.
 */
 lista *crear();
 
 /*
-inserta un nodo al final de la lista
-@entrada: una lista L
-@salida: misma lista L pero con un nodo vacio al final de esta.
+    Funcion que inserta un nodo al final de la lista.
+    @param L Lista en la cual insertar nodo.
+    @return Misma lista L pero con un nodo vacio al final de esta.
 */
 lista *insertar_nodo(lista *L);
 
 /*
-obtiene el largo de la lista
-@entrada: una lista L
-@salida: el largo de la lista
+    Funcion que obtiene el largo de la lista.
+    @param L Lista de la cual obtener el largo.
+    @return Largo de la lista ingresada.
 */
 int largo_lista(lista *L);
 
 /*
-inserta un dato x en la posicion p de la lista L
+    Funcion que inserta un elemento de una posicion de una lista.
+    @param x Elemento a ingresar en la lista.
+    @param p Posicion donde ingresar el elemento.
+    @param L Lista en la cual se ingresa el elemento.
+    @return Misma lista L pero con un el dato insertado.
 */
 lista *insertar_dato(int x, int p, lista *L);
 
 /*
-muestra la lista
-mas que nada esto es para tener un seguimiento de los datos
-@entrada: la lista L a mostrar
+    Procedimiento que imprime por pantalla una lista.
+    @param L Lista para mostrar.
 */
 void mostrar(lista *L);
 
 /*
-
+    Funcion que recupera un elemento de una posicion de una lista.
+    @param p Posicion donde recuperar el elemento.
+    @param L Lista de la cual se recupera el elemento.
+    @return elemento recuperado de la lista.
 */
 int recuperar_dato(int p, lista *L);
 
 /*
-destruye la lista L
-@entrada: la lista L a borrar
+    Procedimiento que destruye una lista y libera la memoria ocupada por esta.
+    @param L Lista para ser destruida.
 */
 void destruir(lista *L);
 
 /*
-verifica si existe un elemento x en la lista L.
-@entrada: elemento x a verificar, y lista L en la cual buscar.
-@salida: 1 si existe el elemento, y 0 en caso contrario.
+    Funcion que comprueba si existe un elemento en una lista.
+    @param x Elemento a verificar en lista.
+    @param L Lista en la cual se verfica el elemento.
+    @return resultado de la verificacion, 1 si existe, 0 si no.
 */
 int existe(int x, lista *L);
 
 /*
-verifica si la lista L esta llena o no
-@entrada: la lista L a verificar
-@salida: 1 si esta llena y 0 en caso contrario
+    Funcion que comprueba si una lista esta llena(dado que el conjunto residente puede estar lleno).
+    @param L Lista a verificar.
+    @return resultado de la verificacion, 1 si esta llena, 0 si no.
 */
 int lleno(lista *L);
 
 /*
-entrega la posicion en que se encuentra el dato x en la lista L
-@entrada: el dato a buscar, y la lista L en la cual buscar
-@salida: la posicion del dato en la lista L
-	  Si no esta el dato en la lista, entrega -10000
+    Funcion que entrega la posicion en que se encuentra un dato en una lista.
+    @param x Elemento para obtener la posicion.
+    @param L Lista en la cual se busca el elemento.
+    @return Posicion del elemento buscado, retorna un numero invalido si no esta.
 */
 int posicion(int x, lista *L);
 

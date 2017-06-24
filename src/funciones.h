@@ -8,15 +8,15 @@
 #include <time.h>
 #include "listas.h"
 
-//////// --ESTRUCTURAS-- ///////
-
-//////// -- VAR. GLOBALES -- ///////
-
 //////// --FUNCIONES-- ////////
 /*
     Procedimiento que hace la llamada a getopt para obtener las opciones y
     parametros ingresados por la terminal.
-    @parametros ...
+    @param argc cantidad de parametros ingresados por consola.
+    @param argv arreglo con los parametros ingresados por consola.
+    @param n paso por referencia para obtener el tamaño del tablero.
+    @param d paso por referencia para obtener la bandera para mostrar el resumen de los guerreros.
+    @param nombreArchivo paso por referencia para obtener el nombre del archivo ingresado.
 */
 void call_getopt(int argc, char** argv, int *m, char **archivo_entrada, char **archivo_salida);
 
@@ -29,54 +29,71 @@ void call_getopt(int argc, char** argv, int *m, char **archivo_entrada, char **a
 int isInt(char *number);
 
 /*
-funcion que aplica el algoritmo de reemplazo OPTIMO, el cual mira que página
-esta más lejana a ser referenciada, y elije esta para reemplazar.
-En caso de que varias paginas no se referencien en la misma cantidad de tiempos,
-entonces se reemplaza cualquiera.
-@entrada: 	lista L correspondiente a los marcos
-		el nombre del archivo de entrada
-		el nombre del archivo de salida
-@salida: 	devuelve la tasa de miss de este algoritmo, para futuros calculos
+    Funcion que aplica el algoritmo de reemplazo OPTIMO, el cual mira que página
+    esta más lejana a ser referenciada, y elije esta para reemplazar.
+    En caso de que varias paginas no se referencien en la misma cantidad de tiempos,
+    entonces se reemplaza cualquiera.
+    @param L Lista correspondiente a los marcos.
+    @param archivo_entrada Nombre del archivo de entrada.
+    @param archivo_salida Nombre del archivo de salida.
+    @return Tasa de miss de este algoritmo, para futuros calculos.
 */
 float optimo(lista *L, char *archivo_entrada, char *archivo_salida);
 
 /*
-funcion que mira hacia el futuro las paginas en el algoritmo optimo
-para saber cual reemplazar
-@entrada: 	inicio indicando en que pagina actual vamos
-		final indicando hasta que paginas existen
-		las paginas en si
-		y el dato que se esta buscando hacia adelante
-@salida: el numero de turnos en que se demora en aparecer la pagina buscada
-	si la pagina no esta, retorna un numero muy grande.
+    Funcion que mira hacia el futuro las paginas en el algoritmo optimo
+    para saber cual reemplazar
+    @param inicio Inicio indicando en que pagina actual vamos.
+    @param final Final indicando hasta que paginas existen.
+    @param paginas Las paginas en si.
+    @param dato dato que se esta buscando hacia adelante.
+    @return Numero de turnos en que se demora en aparecer la pagina buscada si la pagina no esta, retorna un numero muy grande.
 */
-int mirar_futuro(int inicio, int final,int paginas[], int dato);
+int mirar_futuro(int inicio, int final, int paginas[], int dato);
 
 /*
-funcion que entrega la posicion del numero mayor de un arreglo de numeros
-@entrada: el arreglo de numeros y el largo de este
-@salida: la posicion del numero mayor. Si hay mas de uno que cumple la caracteristica, entrega el primero en aparecer
+    Funcion que entrega la posicion del numero mayor de un arreglo de numeros.
+    @param arreglo Arreglo de numeros y el largo de este.
+    @return Posicion del numero mayor. Si hay mas de uno que cumple la caracteristica, entrega el primero en aparecer.
 */
 int mayor(int arreglo[], int largo);
 
 /*
+    Funcion que obtiene el numero de paginas desde a un archivo de entrada con las paginas.
+    @param nombreEntrada nombre del archivo de entrada con las paginas.
+    @return Numero de paginas.
 */
 int getNumPaginas(char* nombreEntrada);
 
-int* getPaginas(char* entrada, int numPaginas);
 /*
+    Funcion que obtiene las paginas desde un archivo de entrada.
+    @param nombreEntrada nombre del archivo de entrada con las paginas.
+    @param numPaginas cantidad de paginas que existen en el archivo.
+    @return arreglo con las paginas.
+*/
+int* getPaginas(char* entrada, int numPaginas);
 
+/*
+    Procedimiento que aplica el algoritmo de reemplazo FIFO, el cual reemplaza la pagina mas antigua que entro.
+    @param L Lista correspondiente a los marcos.
+    @param archivo_entrada Nombre del archivo de entrada.
+    @param archivo_salida Nombre del archivo de salida.
+    @param tasa_miss_optimo Tasa de miss obtenida del algoritmo de reemplazo OPTIMO para realizar comparaciones.
 */
 void fifo(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_optimo);
 
 /*
-
+    Procedimiento que aplica el algoritmo de reemplazo LRU, el cual reemplaza la pagina menos recientenmente usada.
+    @param L Lista correspondiente a los marcos.
+    @param archivo_entrada Nombre del archivo de entrada.
+    @param archivo_salida Nombre del archivo de salida.
+    @param tasa_miss_optimo Tasa de miss obtenida del algoritmo de reemplazo OPTIMO para realizar comparaciones.
 */
 void LRU(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_optimo);
 
 /*
-
+    Algoritmo reloj no implementado.
 */
-void reloj(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_optimo);
+//void reloj(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_optimo);
 
 #endif

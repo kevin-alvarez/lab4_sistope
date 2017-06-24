@@ -173,7 +173,7 @@ float optimo(lista *L, char *archivo_entrada, char *archivo_salida)
 			{
 				if(recuperar_dato(k,aux) != -10000)
 				{
-					fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+					fprintf(salida, "%d", recuperar_dato(k,aux));
 				}
 				else
 				{
@@ -202,7 +202,7 @@ float optimo(lista *L, char *archivo_entrada, char *archivo_salida)
 				{
 					if(recuperar_dato(k,aux) != -10000)
 					{
-						fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+						fprintf(salida, "%d", recuperar_dato(k,aux));
 					}
 					else
 					{
@@ -232,7 +232,7 @@ float optimo(lista *L, char *archivo_entrada, char *archivo_salida)
 				{
 					if(recuperar_dato(k,aux) != -10000)
 					{
-						fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+						fprintf(salida, "%d", recuperar_dato(k,aux));
 					}
 					else
 					{
@@ -343,7 +343,7 @@ void fifo(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss
 			{
 				if(recuperar_dato(k,aux) != -10000)
 				{
-					fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+					fprintf(salida, "%d", recuperar_dato(k,aux));
 				}
 				else
 				{
@@ -372,7 +372,7 @@ void fifo(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss
 				{
 					if(recuperar_dato(k,aux) != -10000)
 					{
-						fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+						fprintf(salida, "%d", recuperar_dato(k,aux));
 					}
 					else
 					{
@@ -398,7 +398,7 @@ void fifo(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss
 				{
 					if(recuperar_dato(k,aux) != -10000)
 					{
-						fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+						fprintf(salida, "%d", recuperar_dato(k,aux));
 					}
 					else
 					{
@@ -447,7 +447,7 @@ void LRU(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_
 	//Se obtienen las paginas
 	numPaginas = getNumPaginas(archivo_entrada);
 	paginas = getPaginas(archivo_entrada, numPaginas);
-	usados = (int*)malloc(numPaginas*sizeof(int)); 	
+	usados = (int*)malloc(numPaginas*sizeof(int));
 
 	/*
 	ahora tengo todos los datos del archivo de entrada guardados correctamente.
@@ -480,7 +480,7 @@ void LRU(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_
 			{
 				if(recuperar_dato(k,aux) != -10000)
 				{
-					fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+					fprintf(salida, "%d", recuperar_dato(k,aux));
 				}
 				else
 				{
@@ -509,7 +509,7 @@ void LRU(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_
 				{
 					if(recuperar_dato(k,aux) != -10000)
 					{
-						fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+						fprintf(salida, "%d", recuperar_dato(k,aux));
 					}
 					else
 					{
@@ -539,7 +539,7 @@ void LRU(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_
 				{
 					if(recuperar_dato(k,aux) != -10000)
 					{
-						fputc((char)(recuperar_dato(k,aux) + 48) , salida);
+						fprintf(salida, "%d", recuperar_dato(k,aux));
 					}
 					else
 					{
@@ -572,136 +572,4 @@ void LRU(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_
 	fputs(cadena,salida);
 
 	fclose(salida);
-}
-
-void reloj(lista *L, char *archivo_entrada, char *archivo_salida, float tasa_miss_optimo){
-
-	lista *aux = L;
-
-	/* abro el archivo de entrada */
-	FILE *entrada;
-	entrada = fopen ( archivo_entrada, "r" );
-	if (entrada==NULL)
-	{
-		printf("Archivo de entrada no existe\n");
-		exit (1);
-	}
-
-	/*
-	cuento las comas del archivo de entrada, ya que la cantidad
-	de elementos son la cantidad de comas + 1
-	*/
-	int cantidad_entrada = 0;
-	char c;
-	while (feof(entrada) == 0)
- 	{
- 		c = fgetc(entrada);
- 		if(c == ',') {cantidad_entrada++;}
- 	}
- 	cantidad_entrada++;
- 	rewind(entrada);
-
- 	/*
-	ahora si obtengo los datos del archivo de entrada
-	y los guardo en un arreglo correspondiente.
- 	*/
- 	int datos[cantidad_entrada];
- 	int i,j;
- 	i = 0;
- 	j = 0;
- 	char entero[10000];
- 	while (feof(entrada) == 0)
- 	{
- 		c = fgetc(entrada);
- 		if (c != ',')
- 		{
- 			entero[i] = c;
- 			i++;
- 		}
- 		else
- 		{
- 			entero[i] = '\0';
- 			i = 0;
- 			datos[j] = atoi(entero);
- 			j++;
- 		}
- 	}
- 	entero[i] = '\0';
-	datos[j] = atoi(entero);
-
-
-	/*
-	ahora tengo todos los datos del archivo de entrada guardados correctamente.
-	Abro el archivo de salida para comenzar a escribir los resultados
-	*/
-	FILE *salida;
-	salida = fopen ( archivo_salida, "a" ); /* Ahora lo abro en modo append para no sobreescribir */
-	fputs("Algoritmo Reloj\n\n", salida);
-
-	/* creo variables a utilizar */
-	int miss = 0;
-	int hits = 0;
-	int m = 0;
-	int k;
-	char cadena[1000];
-	int dato_actual;
-	int cantidad_marcos = largo_lista(aux);
-	for (i = 0; i < cantidad_entrada; ++i)
-	{
-		dato_actual = datos[i];
-		if(existe(dato_actual, aux)){
-			hits++;
-			for(k = 0; k < cantidad_marcos; k++)
-			{
-				if(recuperar_dato(k,aux) != -10000)
-				{
-					fputc((char)(recuperar_dato(k,aux) + 48) , salida);
-				}
-				else
-				{
-					fputc(' ', salida);
-				}
-				if(k != (cantidad_marcos-1))
-				{
-					fputc(' ', salida);
-					fputc('-', salida);
-					fputc(' ', salida);
-				}
-			}
-			fputc('\n', salida);
-			fputc('\n', salida);;
-		}
-		else{
-			miss++;
-
-			if(lleno(aux) != 1){
-				aux = insertar_dato(dato_actual, m, aux);
-				m = (m+1)%cantidad_marcos;
-
-				for(k = 0; k < cantidad_marcos; k++)
-				{
-					if(recuperar_dato(k,aux) != -10000)
-					{
-						fputc((char)(recuperar_dato(k,aux) + 48) , salida);
-					}
-					else
-					{
-						fputc(' ', salida);
-					}
-					if(k != (cantidad_marcos-1))
-					{
-						fputc(' ', salida);
-						fputc('-', salida);
-						fputc(' ', salida);
-					}
-				}
-				fputc('\n', salida);
-				fputc('\n', salida);
-			}
-			else{
-				/* si los marcos estan llenos entonces comienza el reemplazo */
-
-			}
-		}
-	}
 }
